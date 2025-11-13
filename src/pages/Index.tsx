@@ -1,12 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { Header } from '@/components/Header';
+import { Role } from '@/types';
+import CEODashboard from './CEODashboard';
+import HODDashboard from './HODDashboard';
+import PodView from './PodView';
 
 const Index = () => {
+  const [currentMonth, setCurrentMonth] = useState('2025-10');
+  const [currentRole, setCurrentRole] = useState<Role>('CEO');
+
+  const renderDashboard = () => {
+    switch (currentRole) {
+      case 'CEO':
+        return <CEODashboard />;
+      case 'HOD':
+        return <HODDashboard />;
+      case 'PodLead':
+      case 'Employee':
+        return <PodView />;
+      default:
+        return <CEODashboard />;
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header
+        currentMonth={currentMonth}
+        onMonthChange={setCurrentMonth}
+        currentRole={currentRole}
+        onRoleChange={setCurrentRole}
+      />
+      <main>{renderDashboard()}</main>
     </div>
   );
 };
