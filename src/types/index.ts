@@ -1,4 +1,4 @@
-export type Role = 'CEO' | 'HOD' | 'PodLead' | 'Employee';
+export type Role = 'CEO' | 'HOD' | 'PodLead' | 'Employee' | 'Admin' | 'Automation';
 
 export type Product = 'Academy' | 'Intensive' | 'NIAT';
 

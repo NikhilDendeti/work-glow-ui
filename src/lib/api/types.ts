@@ -26,7 +26,7 @@ export interface TokenResponse {
 export interface User {
   employee_code: string;
   employee_id?: number;
-  role: 'CEO' | 'HOD' | 'PodLead' | 'Employee';
+  role: 'CEO' | 'HOD' | 'PodLead' | 'Employee' | 'Admin' | 'Automation';
   department_id?: number;
   department_name?: string;
   pod_id?: number;
@@ -169,5 +169,179 @@ export interface Feature {
   product_id: number;
   product_name: string;
   description?: string;
+}
+
+// Allocation types
+export type AllocationStatus = 'PENDING' | 'SUBMITTED' | 'PROCESSED';
+
+export interface PodLeadAllocation {
+  id: number;
+  employee_id: number;
+  employee_code: string;
+  employee_name: string;
+  email: string;
+  product: string;
+  product_description: string;
+  academy_percent: number;
+  intensive_percent: number;
+  niat_percent: number;
+  features_text?: string | null;
+  is_verified_description: boolean;
+  baseline_hours: number;
+  status: AllocationStatus;
+  total_percent: number;
+}
+
+export interface AllocationSheetResponse {
+  pods: Array<{
+    pod_id: number;
+    pod_name: string;
+    pod_lead_code: string;
+    download_url: string;
+    media_url: string;
+  }>;
+}
+
+export interface AllocationSheetInfo {
+  pod_id: number;
+  pod_name: string;
+  pod_lead_code: string;
+  download_url: string;
+  media_url: string;
+}
+
+export interface AllocationSubmissionItem {
+  employee_id: number;
+  product: string;
+  product_description: string;
+  academy_percent: number;
+  intensive_percent: number;
+  niat_percent: number;
+  is_verified_description: boolean;
+}
+
+export interface SubmitAllocationRequest {
+  month: string;
+  allocations: AllocationSubmissionItem[];
+}
+
+export interface SubmitAllocationResponse {
+  summary: {
+    updated_allocations: number;
+    error_count: number;
+  };
+  allocations: PodLeadAllocation[];
+  errors: Array<{
+    employee_id?: number;
+    product?: string;
+    message: string;
+  }>;
+  has_errors: boolean;
+}
+
+export interface ProcessAllocationsResponse {
+  processed_count: number;
+  output_format: 'records' | 'csv';
+  created_records: number;
+  message: string;
+}
+
+export interface FinalMasterListResponse {
+  file_path: string;
+  download_url: string;
+  month: string;
+  filename: string;
+  exists?: boolean;
+}
+
+// Admin upload types
+export interface InitialXLSXUploadResponse {
+  summary: {
+    generated_sheets: number;
+    created_allocations: number;
+    month: string;
+    total_employees: number;
+    total_pods_in_file: number;
+    pods_with_sheets: number;
+    pods_skipped: number;
+    teams_processed: number;
+  };
+  teams: Array<{
+    department: string;
+    pods_with_sheets: number;
+    pods_skipped: number;
+    pods: Array<{
+      pod_id: number;
+      pod_name: string;
+      pod_lead_code: string;
+      sheet_path: string;
+      download_url: string;
+    }>;
+    skipped_pods: Array<{
+      pod_name: string;
+      employee_count: number;
+      reason: string;
+    }>;
+  }>;
+  errors: Array<{
+    sheet?: string;
+    row: number;
+    field: string;
+    message: string;
+  }>;
+  has_errors: boolean;
+}
+
+export interface AdminUploadResponse {
+  summary: {
+    generated_sheets?: number;
+    created_allocations?: number;
+    created_employees?: number;
+    updated_employees?: number;
+    created_departments?: number;
+    created_pods?: number;
+    month?: string;
+  };
+  sheets?: Array<{
+    pod_id: number;
+    pod_name: string;
+    pod_lead_code: string;
+    sheet_path: string;
+    download_url: string;
+  }>;
+  errors: Array<{
+    sheet?: string;
+    row: number;
+    field: string;
+    message: string;
+  }>;
+  has_errors: boolean;
+}
+
+export interface EmployeeImportResponse {
+  summary: {
+    created_employees: number;
+    updated_employees: number;
+    created_departments: number;
+    created_pods: number;
+  };
+}
+
+export interface GenerateSheetsResponse {
+  success: boolean;
+  data: {
+    summary: {
+      generated_sheets: number;
+      month: string;
+    };
+    sheets: Array<{
+      pod_id: number;
+      pod_name: string;
+      pod_lead_code: string;
+      sheet_path: string;
+      download_url: string;
+    }>;
+  };
+  message?: string;
 }
 

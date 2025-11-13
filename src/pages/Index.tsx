@@ -8,6 +8,7 @@ import CEODashboard from './CEODashboard';
 import HODDashboard from './HODDashboard';
 import PodView from './PodView';
 import EmployeeDashboard from './EmployeeDashboard';
+import AdminDashboard from './AdminDashboard';
 
 const Index = () => {
   const [currentMonth, setCurrentMonth] = useState('2025-10');
@@ -24,6 +25,10 @@ const Index = () => {
     currentRole = 'HOD';
   } else if (normalizedRole === 'podlead' || normalizedRole === 'pod_lead') {
     currentRole = 'PodLead';
+  } else if (normalizedRole === 'admin') {
+    currentRole = 'Admin';
+  } else if (normalizedRole === 'automation') {
+    currentRole = 'Automation';
   } else {
     currentRole = 'Employee';
   }
@@ -42,6 +47,10 @@ const Index = () => {
         return 'Head of Department';
       case 'PodLead':
         return 'Pod Lead';
+      case 'Admin':
+        return 'Administrator';
+      case 'Automation':
+        return 'Automation User';
       case 'Employee':
         return 'Employee';
       default:
@@ -57,6 +66,10 @@ const Index = () => {
         return 'secondary';
       case 'PodLead':
         return 'outline';
+      case 'Admin':
+        return 'default';
+      case 'Automation':
+        return 'secondary';
       default:
         return 'outline';
     }
@@ -71,6 +84,10 @@ const Index = () => {
       case 'PodLead':
         // Pod Lead sees their pod contributions
         return <PodView month={currentMonth} />;
+      case 'Admin':
+      case 'Automation':
+        // Admin and Automation see Admin Dashboard
+        return <AdminDashboard month={currentMonth} />;
       case 'Employee':
         // Employee sees their own contributions using employee_id
         return <EmployeeDashboard month={currentMonth} />;

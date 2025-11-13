@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { ProductCard } from '@/components/ProductCard';
 import { TopTeamsTable } from '@/components/TopTeamsTable';
 import { ProductChart } from '@/components/ProductChart';
 import { useOrgDashboard } from '@/hooks/api/useDashboards';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FileCheck, FileText } from 'lucide-react';
 import { Product } from '@/types';
 import { toast } from '@/hooks/use-toast';
 
@@ -12,6 +15,7 @@ interface CEODashboardProps {
 }
 
 export default function CEODashboard({ month }: CEODashboardProps) {
+  const navigate = useNavigate();
   const { data, isLoading, isError, error } = useOrgDashboard(month);
 
   if (isLoading) {
@@ -92,6 +96,26 @@ export default function CEODashboard({ month }: CEODashboardProps) {
 
   return (
     <div className="container space-y-8 py-8">
+      {/* Quick Actions */}
+      <div className="flex gap-4">
+        <Button
+          variant="outline"
+          onClick={() => navigate('/admin/process-allocations')}
+          className="gap-2"
+        >
+          <FileCheck className="h-4 w-4" />
+          Process Allocations
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => navigate('/admin/final-master-list')}
+          className="gap-2"
+        >
+          <FileText className="h-4 w-4" />
+          Final Master List
+        </Button>
+      </div>
+
       {/* Overview Stats */}
       <div>
         <div className="mb-6">

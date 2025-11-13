@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, User, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Calendar, User, LogOut, LayoutDashboard, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -28,6 +29,7 @@ export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps
   const [date, setDate] = useState(new Date(currentMonth + '-01'));
   const { user } = useAuth();
   const logout = useLogout();
+  const navigate = useNavigate();
 
   const formatMonth = (dateStr: string) => {
     const d = new Date(dateStr + '-01');
@@ -49,9 +51,32 @@ export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
       <div className="container flex h-16 items-center justify-between px-6">
-        {/* Logo */}
-        <div className="flex items-center gap-2">
+        {/* Logo & Navigation */}
+        <div className="flex items-center gap-6">
           <h1 className="text-xl font-bold">OrgContributions</h1>
+          {/* Navigation Links */}
+          {(['Admin', 'Automation'] as Role[]).includes(currentRole) && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/admin')}
+              className="gap-2"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              <span className="hidden sm:inline">{currentRole === 'Automation' ? 'Dashboard' : 'Admin'}</span>
+            </Button>
+          )}
+          {currentRole === 'PodLead' && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/pod-lead/allocations')}
+              className="gap-2"
+            >
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Allocations</span>
+            </Button>
+          )}
         </div>
 
         {/* Month Selector */}
