@@ -1,73 +1,84 @@
-# Welcome to your Lovable project
+# OrgContributions Dashboard
 
-## Project info
+A modern dashboard application for tracking organizational contributions across products and teams.
 
-**URL**: https://lovable.dev/projects/a4c35b69-d947-4d92-817f-48fb2e93ad1d
+## Getting Started
 
-## How can I edit this code?
+### Prerequisites
 
-There are several ways of editing your application.
+- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-**Use Lovable**
+### Installation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a4c35b69-d947-4d92-817f-48fb2e93ad1d) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Follow these steps to get started:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Step 2: Navigate to the project directory
+cd work-glow-ui
 
-# Step 3: Install the necessary dependencies.
+# Step 3: Install the necessary dependencies
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server with auto-reloading
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Development
 
-**Use GitHub Codespaces**
+### Available Scripts
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build for development
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
 
-## What technologies are used for this project?
+## Technologies
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Vite** - Build tool and dev server
+- **TypeScript** - Type safety
+- **React** - UI framework
+- **shadcn-ui** - UI component library
+- **Tailwind CSS** - Styling
+- **React Router** - Routing
+- **Recharts** - Data visualization
+- **TanStack Query** - Data fetching and caching
 
-## How can I deploy this project?
+## Project Structure
 
-Simply open [Lovable](https://lovable.dev/projects/a4c35b69-d947-4d92-817f-48fb2e93ad1d) and click on Share -> Publish.
+```
+src/
+├── components/     # Reusable UI components
+│   ├── ui/        # shadcn/ui components
+│   └── [custom]   # Application-specific components
+├── pages/         # Route components
+├── hooks/         # Custom React hooks
+├── lib/           # Utilities & mock data
+└── types/         # TypeScript type definitions
+```
 
-## Can I connect a custom domain to my Lovable project?
+## Features
 
-Yes, you can!
+- Role-based dashboards (CEO, HOD, Pod Lead, Employee)
+- Product contribution tracking (Academy, Intensive, NIAT)
+- Department and pod breakdowns
+- Employee contribution details
+- Interactive charts and visualizations
+- Month-based filtering
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Deployment
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Build the project for production:
+
+```sh
+npm run build
+```
+
+The `dist` folder will contain the production-ready files that can be deployed to any static hosting service.

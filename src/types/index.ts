@@ -2,6 +2,26 @@ export type Role = 'CEO' | 'HOD' | 'PodLead' | 'Employee';
 
 export type Product = 'Academy' | 'Intensive' | 'NIAT';
 
+// Re-export API types
+export type {
+  ApiResponse,
+  ApiError,
+  LoginRequest,
+  TokenResponse,
+  User,
+  ProductResponse,
+  OrgDashboardResponse,
+  DepartmentDashboardResponse,
+  PodContributionsResponse,
+  EmployeeContributionsResponse,
+  UploadResponse,
+  UploadSummary,
+  UploadError,
+  Product as ProductEntity,
+  Feature,
+} from '@/lib/api/types';
+
+// Legacy types for backward compatibility (will be transformed from API responses)
 export interface ProductData {
   product: Product;
   hours: number;

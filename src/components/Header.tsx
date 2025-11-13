@@ -1,29 +1,33 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/useAuth';
+import { useLogout } from '@/hooks/api/useAuth';
 import { Role } from '@/types';
 
 interface HeaderProps {
   currentMonth: string;
   onMonthChange: (month: string) => void;
   currentRole: Role;
-  onRoleChange: (role: Role) => void;
 }
 
-export function Header({ currentMonth, onMonthChange, currentRole, onRoleChange }: HeaderProps) {
+export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps) {
   const [date, setDate] = useState(new Date(currentMonth + '-01'));
+  const { user } = useAuth();
+  const logout = useLogout();
 
   const formatMonth = (dateStr: string) => {
     const d = new Date(dateStr + '-01');
@@ -47,9 +51,6 @@ export function Header({ currentMonth, onMonthChange, currentRole, onRoleChange 
       <div className="container flex h-16 items-center justify-between px-6">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">O</span>
-          </div>
           <h1 className="text-xl font-bold">OrgContributions</h1>
         </div>
 
@@ -88,22 +89,33 @@ export function Header({ currentMonth, onMonthChange, currentRole, onRoleChange 
           </Button>
         </div>
 
-        {/* Role Selector */}
+        {/* User Menu */}
         <div className="flex items-center gap-3">
-          <Select value={currentRole} onValueChange={(value) => onRoleChange(value as Role)}>
-            <SelectTrigger className="w-[140px]">
-              <div className="flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted">
+            <span className="text-sm font-medium text-muted-foreground">Role:</span>
+            <span className="text-sm font-semibold">{currentRole}</span>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="gap-2">
                 <User className="h-4 w-4" />
-                <SelectValue />
-              </div>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="CEO">CEO</SelectItem>
-              <SelectItem value="HOD">HOD</SelectItem>
-              <SelectItem value="PodLead">Pod Lead</SelectItem>
-              <SelectItem value="Employee">Employee</SelectItem>
-            </SelectContent>
-          </Select>
+                <span className="hidden sm:inline">{user?.employee_code || 'User'}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium">{user?.employee_code}</p>
+                  <p className="text-xs text-muted-foreground">{currentRole}</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={logout} className="cursor-pointer">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
