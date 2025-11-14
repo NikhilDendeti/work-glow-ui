@@ -106,28 +106,28 @@ export default function EmployeeDashboard({ month }: EmployeeDashboardProps) {
   const totalHours = data.total_hours || 0;
 
   return (
-    <div className="container space-y-8 py-8">
+    <div className="container space-y-8 py-8 smooth-scroll">
       {/* Employee Header */}
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight">My Contributions</h2>
-        <p className="text-muted-foreground">
+      <div className="fade-in">
+        <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">My Contributions</h2>
+        <p className="text-muted-foreground text-lg mt-2">
           {data.employee_name} ({data.employee_code}) - {month}
         </p>
       </div>
 
       {/* Total Hours Card */}
-      <Card className="p-6">
+      <Card className="p-6 card-hover bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-primary/20 fade-in">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">Total Hours</p>
-            <p className="text-3xl font-bold">{totalHours.toLocaleString()}</p>
+            <p className="text-sm font-medium text-muted-foreground mb-2">Total Hours</p>
+            <p className="text-4xl font-bold bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent">{totalHours.toLocaleString()}</p>
           </div>
         </div>
       </Card>
 
       {/* Product Summary */}
       {data.products && data.products.length > 0 && (
-        <Card className="p-6">
+        <Card className="p-6 card-hover fade-in">
           <h3 className="text-lg font-semibold mb-4">Product Breakdown</h3>
           <div className="space-y-4">
             {data.products.map((product) => {
@@ -160,7 +160,7 @@ export default function EmployeeDashboard({ month }: EmployeeDashboardProps) {
 
       {/* Features/Contributions Table */}
       {data.features && data.features.length > 0 && (
-        <Card className="p-6">
+        <Card className="p-6 card-hover fade-in">
           <h3 className="text-lg font-semibold mb-4">Feature Contributions</h3>
           <Table>
             <TableHeader>

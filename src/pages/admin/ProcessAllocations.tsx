@@ -63,25 +63,25 @@ export default function ProcessAllocations() {
   const processData = processMutation.data;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background smooth-scroll">
       <Header currentMonth={month} onMonthChange={setMonth} currentRole={currentRole} />
       <div className="container space-y-8 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Process Allocations</h2>
-            <p className="text-muted-foreground">
+        <div className="flex items-center justify-between fade-in">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Process Allocations</h2>
+            <p className="text-muted-foreground text-lg">
               Process submitted Pod Lead allocations into contribution records
             </p>
           </div>
-          <Button variant="outline" onClick={handleBack}>
+          <Button variant="outline" onClick={handleBack} className="shadow-sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Dashboard
           </Button>
         </div>
 
         {/* Process Form */}
-        <Card className="p-6">
+        <Card className="p-6 card-hover fade-in">
           <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="month">Month</Label>
@@ -138,7 +138,7 @@ export default function ProcessAllocations() {
 
         {/* Process Results */}
         {processData && (
-          <Card className="p-6">
+          <Card className="p-6 card-hover bg-gradient-to-br from-success/10 via-success/5 to-transparent border-success/20 fade-in">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <FileCheck className="h-5 w-5 text-green-600" />

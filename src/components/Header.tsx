@@ -49,18 +49,18 @@ export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-primary/95 to-primary/90 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md shadow-md">
       <div className="container flex h-16 items-center justify-between px-6">
         {/* Logo & Navigation */}
         <div className="flex items-center gap-6">
-          <h1 className="text-xl font-bold">OrgContributions</h1>
+          <h1 className="text-xl font-bold text-primary-foreground">OrgContributions</h1>
           {/* Navigation Links */}
           {(['Admin', 'Automation'] as Role[]).includes(currentRole) && (
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate('/admin')}
-              className="gap-2"
+              className="gap-2 text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10"
             >
               <LayoutDashboard className="h-4 w-4" />
               <span className="hidden sm:inline">{currentRole === 'Automation' ? 'Dashboard' : 'Admin'}</span>
@@ -71,7 +71,7 @@ export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps
               variant="ghost"
               size="sm"
               onClick={() => navigate('/pod-lead/allocations')}
-              className="gap-2"
+              className="gap-2 text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10"
             >
               <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">Allocations</span>
@@ -92,7 +92,7 @@ export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps
           
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="min-w-[200px] justify-start gap-2">
+              <Button variant="outline" className="min-w-[200px] justify-start gap-2 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
                 <Calendar className="h-4 w-4" />
                 {formatMonth(currentMonth)}
               </Button>
@@ -116,13 +116,13 @@ export function Header({ currentMonth, onMonthChange, currentRole }: HeaderProps
 
         {/* User Menu */}
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted">
-            <span className="text-sm font-medium text-muted-foreground">Role:</span>
-            <span className="text-sm font-semibold">{currentRole}</span>
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary-foreground/10 border border-primary-foreground/20">
+            <span className="text-sm font-medium text-primary-foreground/80">Role:</span>
+            <span className="text-sm font-semibold text-primary-foreground">{currentRole}</span>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
                 <User className="h-4 w-4" />
                 <span className="hidden sm:inline">{user?.employee_code || 'User'}</span>
               </Button>

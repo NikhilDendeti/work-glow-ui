@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/Header';
@@ -7,10 +7,21 @@ import { useAuth } from '@/hooks/useAuth';
 import PodView from './PodView';
 
 export default function PodViewPage() {
-  const [currentMonth, setCurrentMonth] = useState('2025-10');
+  const [searchParams] = useSearchParams();
+  const monthFromUrl = searchParams.get('month');
+  const [currentMonth, setCurrentMonth] = useState(
+    monthFromUrl || new Date().toISOString().slice(0, 7)
+  );
   const { user } = useAuth();
   const currentRole = user?.role || 'Employee';
   const navigate = useNavigate();
+
+  // Update month when URL query param changes
+  useEffect(() => {
+    if (monthFromUrl) {
+      setCurrentMonth(monthFromUrl);
+    }
+  }, [monthFromUrl]);
 
   const handleBack = () => {
     // Use browser history if available, otherwise navigate based on role

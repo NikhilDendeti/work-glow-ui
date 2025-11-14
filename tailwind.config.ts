@@ -60,7 +60,20 @@ export default {
         niat: {
           DEFAULT: "hsl(var(--niat))",
           light: "hsl(var(--niat-light))",
+          dark: "hsl(var(--niat-dark))",
           foreground: "hsl(var(--niat-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
         },
       },
       borderRadius: {

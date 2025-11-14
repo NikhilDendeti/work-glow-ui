@@ -34,35 +34,35 @@ export function ProductCard({ product, hours, percent, onClick }: ProductCardPro
   return (
     <Card
       className={cn(
-        'card-hover cursor-pointer overflow-hidden p-6',
-        onClick && 'hover:shadow-xl'
+        'card-hover cursor-pointer overflow-hidden p-6 bg-gradient-to-br from-card via-card to-accent/5 border-accent/10 fade-in',
+        onClick && 'hover:border-accent/30'
       )}
       onClick={onClick}
     >
       <div className="space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium text-muted-foreground">{product}</h3>
-          <div className={cn('rounded-lg p-2', colors.bg)}>
-            <TrendingUp className={cn('h-4 w-4', colors.text)} />
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{product}</h3>
+          <div className={cn('rounded-xl p-2.5 shadow-sm', colors.bg)}>
+            <TrendingUp className={cn('h-5 w-5', colors.text)} />
           </div>
         </div>
 
         {/* Hours */}
         <div>
-          <div className="number-large">{hours.toLocaleString()}</div>
-          <div className="text-sm text-muted-foreground">total hours</div>
+          <div className="number-large text-foreground">{hours.toLocaleString()}</div>
+          <div className="text-sm text-muted-foreground mt-1">total hours</div>
         </div>
 
         {/* Percentage Bar */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">of total</span>
-            <span className={cn('font-semibold', colors.text)}>{percent.toFixed(1)}%</span>
+            <span className={cn('font-bold text-base', colors.text)}>{percent.toFixed(1)}%</span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-secondary">
+          <div className="h-2.5 overflow-hidden rounded-full bg-secondary shadow-inner">
             <div
-              className={cn('h-full rounded-full transition-all duration-500', colors.gradient)}
+              className={cn('h-full rounded-full transition-all duration-500 shadow-sm', colors.gradient)}
               style={{ width: `${percent}%` }}
             />
           </div>

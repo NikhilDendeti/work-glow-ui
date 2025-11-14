@@ -99,7 +99,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 smooth-scroll">
       <Header
         currentMonth={currentMonth}
         onMonthChange={setCurrentMonth}
@@ -107,13 +107,13 @@ const Index = () => {
       />
       <main>
         {/* Role Indicator Banner */}
-        <div className="border-b bg-muted/30">
+        <div className="border-b bg-gradient-to-r from-primary/5 via-primary/3 to-transparent backdrop-blur-sm">
           <div className="container py-4">
-            <Alert className="border-primary/50 bg-primary/5">
+            <Alert className="border-primary/30 bg-gradient-to-r from-primary/10 to-primary/5 shadow-sm">
               <CheckCircle2 className="h-5 w-5 text-primary" />
               <AlertTitle className="flex items-center gap-3">
-                <span>Logged in as:</span>
-                <Badge variant={getRoleBadgeVariant(currentRole)} className="text-sm font-semibold">
+                <span className="font-semibold">Logged in as:</span>
+                <Badge variant={getRoleBadgeVariant(currentRole)} className="text-sm font-semibold bg-primary text-primary-foreground">
                   {currentRole}
                 </Badge>
               </AlertTitle>

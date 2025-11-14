@@ -66,25 +66,25 @@ export default function UploadInitialXLSX() {
   const uploadData = uploadMutation.data;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background smooth-scroll">
       <Header currentMonth={month} onMonthChange={setMonth} currentRole="Admin" />
       <div className="container space-y-8 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Upload Initial XLSX</h2>
-            <p className="text-muted-foreground">
+        <div className="flex items-center justify-between fade-in">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Upload Initial XLSX</h2>
+            <p className="text-muted-foreground text-lg">
               Upload initial XLSX file and generate allocation sheets for Pod Leads
             </p>
           </div>
-          <Button variant="outline" onClick={() => navigate('/admin')}>
+          <Button variant="outline" onClick={() => navigate('/admin')} className="shadow-sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Dashboard
           </Button>
         </div>
 
         {/* Upload Form */}
-        <Card className="p-6">
+        <Card className="p-6 card-hover fade-in">
           <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="month">Month</Label>
@@ -115,7 +115,7 @@ export default function UploadInitialXLSX() {
             <Button
               onClick={handleUpload}
               disabled={!file || uploadMutation.isPending}
-              className="gap-2"
+              className="gap-2 shadow-md"
             >
               <Upload className="h-4 w-4" />
               {uploadMutation.isPending ? 'Uploading...' : 'Upload and Generate Sheets'}
@@ -125,13 +125,13 @@ export default function UploadInitialXLSX() {
 
         {/* Upload Results */}
         {uploadMutation.isPending && (
-          <Card className="p-6">
+          <Card className="p-6 fade-in">
             <Skeleton className="h-32 w-full" />
           </Card>
         )}
 
         {uploadData && (
-          <Card className="p-6">
+          <Card className="p-6 card-hover bg-gradient-to-br from-success/10 via-success/5 to-transparent border-success/20 fade-in">
             <div className="space-y-6">
               {/* Summary */}
               <div>

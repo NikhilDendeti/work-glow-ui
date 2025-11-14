@@ -181,100 +181,172 @@ export default function PodView({ month: monthProp }: PodViewProps) {
   });
 
   return (
-    <div className="container space-y-8 py-8">
+    <div className="container space-y-8 py-8 smooth-scroll">
       {/* Pod Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">{data.pod_name}</h2>
-          <p className="text-muted-foreground">Employee contributions breakdown</p>
+      <div className="flex items-center justify-between fade-in">
+        <div className="space-y-2">
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">{data.pod_name}</h2>
+          <p className="text-muted-foreground text-lg">Employee contributions breakdown</p>
         </div>
-        <Button variant="outline" className="gap-2" onClick={handleExport}>
+        <Button variant="outline" className="gap-2 shadow-sm" onClick={handleExport}>
           <Download className="h-4 w-4" />
           Export CSV
         </Button>
       </div>
 
       {/* Employees Table */}
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden card-hover fade-in shadow-lg border-primary/10">
+        <div className="bg-gradient-to-r from-primary/5 via-primary/3 to-transparent px-6 py-4 border-b">
+          <h3 className="text-lg font-semibold text-foreground">Employee Contributions</h3>
+          <p className="text-sm text-muted-foreground mt-1">Click to expand and view feature details</p>
+        </div>
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className="w-[40px]"></TableHead>
-              <TableHead>Employee</TableHead>
-              <TableHead className="text-right">Total Hours</TableHead>
-              <TableHead className="text-right">Academy</TableHead>
-              <TableHead className="text-right">Intensive</TableHead>
-              <TableHead className="text-right">NIAT</TableHead>
+            <TableRow className="bg-muted/30 hover:bg-muted/40 border-b-2 border-primary/20">
+              <TableHead className="w-[50px]"></TableHead>
+              <TableHead className="font-semibold text-foreground">Employee</TableHead>
+              <TableHead className="text-right font-semibold text-foreground">Total Hours</TableHead>
+              <TableHead className="text-right font-semibold text-academy">Academy</TableHead>
+              <TableHead className="text-right font-semibold text-intensive">Intensive</TableHead>
+              <TableHead className="text-right font-semibold text-niat">NIAT</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {employees.map((employee) => {
+            {employees.map((employee, index) => {
               const isExpanded = expandedRows.has(employee.employee_code);
+              const totalHours = employee.total_hours;
+              const academyHours = employee.by_product.Academy || 0;
+              const intensiveHours = employee.by_product.Intensive || 0;
+              const niatHours = employee.by_product.NIAT || 0;
+              
               return (
                 <Collapsible key={employee.employee_code} asChild open={isExpanded}>
                   <>
-                    <TableRow className="group">
+                    <TableRow 
+                      className={cn(
+                        "group transition-all duration-200 hover:bg-primary/5 border-b border-border/50",
+                        isExpanded && "bg-primary/5",
+                        "fade-in stagger-item"
+                      )}
+                      style={{ animationDelay: `${index * 0.05}s` }}
+                    >
                       <TableCell>
                         <CollapsibleTrigger asChild>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => toggleRow(employee.employee_code, employee.employee_id)}
-                            className="h-8 w-8 p-0"
+                            className="h-8 w-8 p-0 hover:bg-primary/10 transition-all duration-200"
                           >
                             <ChevronDown
                               className={cn(
-                                'h-4 w-4 transition-transform',
+                                'h-4 w-4 transition-all duration-300 text-primary',
                                 isExpanded && 'rotate-180'
                               )}
                             />
                           </Button>
                         </CollapsibleTrigger>
                       </TableCell>
-                      <TableCell className="font-medium">{employee.name}</TableCell>
-                      <TableCell className="text-right font-mono font-semibold">
-                        {employee.total_hours}
+                      <TableCell className="font-semibold text-base">{employee.name}</TableCell>
+                      <TableCell className="text-right">
+                        <span className="font-mono font-bold text-lg text-primary">
+                          {employee.total_hours.toLocaleString()}
+                        </span>
                       </TableCell>
-                      <TableCell className="text-right font-mono">
-                        {employee.by_product.Academy || '-'}
+                      <TableCell className="text-right">
+                        {academyHours > 0 ? (
+                          <span className="font-mono font-semibold text-academy bg-academy-light/50 px-2 py-1 rounded">
+                            {academyHours.toLocaleString()}
+                          </span>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
                       </TableCell>
-                      <TableCell className="text-right font-mono">
-                        {employee.by_product.Intensive || '-'}
+                      <TableCell className="text-right">
+                        {intensiveHours > 0 ? (
+                          <span className="font-mono font-semibold text-intensive bg-intensive-light/50 px-2 py-1 rounded">
+                            {intensiveHours.toLocaleString()}
+                          </span>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
                       </TableCell>
-                      <TableCell className="text-right font-mono">
-                        {employee.by_product.NIAT || '-'}
+                      <TableCell className="text-right">
+                        {niatHours > 0 ? (
+                          <span className="font-mono font-semibold text-niat bg-niat-light/50 px-2 py-1 rounded">
+                            {niatHours.toLocaleString()}
+                          </span>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
                       </TableCell>
                     </TableRow>
 
                     <CollapsibleContent asChild>
                       <TableRow>
-                        <TableCell colSpan={6} className="bg-muted/30 p-0">
-                          <div className="space-y-2 p-4">
-                            <h4 className="text-sm font-semibold">Features</h4>
-                            <div className="space-y-2">
+                        <TableCell colSpan={6} className="bg-gradient-to-br from-muted/20 via-muted/10 to-transparent p-0 border-b border-border/50">
+                          <div className="space-y-4 p-6">
+                            <div className="flex items-center gap-2">
+                              <div className="h-1 w-1 rounded-full bg-primary"></div>
+                              <h4 className="text-sm font-semibold text-foreground">Feature Contributions</h4>
+                            </div>
+                            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                               {employee.features.length > 0 ? (
-                                employee.features.map((feature, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="flex items-start gap-4 rounded-lg border bg-card p-3"
-                                  >
-                                    <div className="flex-1">
-                                      <div className="font-medium">{feature.name}</div>
-                                      {feature.description && (
-                                        <div className="text-sm text-muted-foreground">
-                                          {feature.description}
-                                        </div>
+                                employee.features.map((feature, idx) => {
+                                  // Determine product type from description
+                                  let productType: Product | null = null;
+                                  let productColor = '';
+                                  if (feature.description?.toLowerCase().includes('academy')) {
+                                    productType = 'Academy';
+                                    productColor = 'bg-academy-light border-academy/30 text-academy';
+                                  } else if (feature.description?.toLowerCase().includes('intensive')) {
+                                    productType = 'Intensive';
+                                    productColor = 'bg-intensive-light border-intensive/30 text-intensive';
+                                  } else if (feature.description?.toLowerCase().includes('niat')) {
+                                    productType = 'NIAT';
+                                    productColor = 'bg-niat-light border-niat/30 text-niat';
+                                  }
+                                  
+                                  return (
+                                    <div
+                                      key={idx}
+                                      className={cn(
+                                        "flex flex-col gap-2 rounded-lg border p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5",
+                                        productColor || "bg-card border-border/50",
+                                        "fade-in stagger-item"
                                       )}
-                                    </div>
-                                    <div className="text-right">
-                                      <div className="font-mono text-sm font-semibold">
-                                        {feature.hours}h
+                                      style={{ animationDelay: `${idx * 0.05}s` }}
+                                    >
+                                      <div className="flex items-start justify-between gap-3">
+                                        <div className="flex-1 min-w-0">
+                                          <div className="font-semibold text-sm mb-1 truncate">{feature.name}</div>
+                                          {feature.description && (
+                                            <div className="text-xs text-muted-foreground line-clamp-2">
+                                              {feature.description}
+                                            </div>
+                                          )}
+                                        </div>
+                                        <div className="flex-shrink-0">
+                                          <div className={cn(
+                                            "font-mono text-base font-bold px-2 py-1 rounded",
+                                            productType === 'Academy' && "bg-academy/10 text-academy",
+                                            productType === 'Intensive' && "bg-intensive/10 text-intensive",
+                                            productType === 'NIAT' && "bg-niat/10 text-niat",
+                                            !productType && "bg-primary/10 text-primary"
+                                          )}>
+                                            {feature.hours}h
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ))
+                                  );
+                                })
                               ) : (
-                                <p className="text-sm text-muted-foreground">No features available</p>
+                                <div className="col-span-full">
+                                  <div className="rounded-lg border border-dashed border-muted-foreground/30 p-6 text-center">
+                                    <p className="text-sm text-muted-foreground">No features available</p>
+                                  </div>
+                                </div>
                               )}
                             </div>
                           </div>

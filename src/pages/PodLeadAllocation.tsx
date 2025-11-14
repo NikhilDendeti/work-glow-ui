@@ -124,11 +124,11 @@ export default function PodLeadAllocation({ month: initialMonth }: PodLeadAlloca
   const canEdit = hasPending || submittedCount > 0;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background smooth-scroll">
       <Header currentMonth={month} onMonthChange={setMonth} currentRole="PodLead" />
       <div className="container space-y-8 py-8">
         {/* Back Button */}
-        <div className="flex items-center">
+        <div className="flex items-center fade-in">
           <Button
             variant="ghost"
             onClick={handleBack}
@@ -140,18 +140,18 @@ export default function PodLeadAllocation({ month: initialMonth }: PodLeadAlloca
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Pod Allocations</h2>
-            <p className="text-muted-foreground">Manage your pod's product allocations</p>
+        <div className="flex items-center justify-between fade-in">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Pod Allocations</h2>
+            <p className="text-muted-foreground text-lg">Manage your pod's product allocations</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={handleDownload} disabled={downloadMutation.isPending}>
+            <Button variant="outline" onClick={handleDownload} disabled={downloadMutation.isPending} className="border-primary/20 bg-primary/5 hover:bg-primary/10 hover:border-primary/30 text-primary">
               <Download className="mr-2 h-4 w-4" />
               {downloadMutation.isPending ? 'Downloading...' : 'Download Sheet'}
             </Button>
             {canEdit && (
-              <Button onClick={handleEdit}>
+              <Button onClick={handleEdit} className="bg-primary hover:bg-primary/90 shadow-md">
                 <FileEdit className="mr-2 h-4 w-4" />
                 Edit Allocations
               </Button>
@@ -161,43 +161,43 @@ export default function PodLeadAllocation({ month: initialMonth }: PodLeadAlloca
 
         {/* Status Cards */}
         <div className="grid gap-4 md:grid-cols-3">
-          <Card className="p-6">
+          <Card className="p-6 card-hover bg-gradient-to-br from-warning/10 via-warning/5 to-transparent border-warning/20 fade-in stagger-item">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Pending</p>
-                <p className="text-3xl font-bold">{pendingCount}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-2">Pending</p>
+                <p className="text-3xl font-bold text-warning">{pendingCount}</p>
               </div>
-              <div className="rounded-full bg-yellow-500/10 p-3">
-                <AlertCircle className="h-6 w-6 text-yellow-600" />
+              <div className="rounded-full bg-warning/20 p-3 shadow-sm transition-transform duration-300 hover:scale-110">
+                <AlertCircle className="h-6 w-6 text-warning" />
               </div>
             </div>
           </Card>
-          <Card className="p-6">
+          <Card className="p-6 card-hover bg-gradient-to-br from-info/10 via-info/5 to-transparent border-info/20 fade-in stagger-item">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Submitted</p>
-                <p className="text-3xl font-bold">{submittedCount}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-2">Submitted</p>
+                <p className="text-3xl font-bold text-info">{submittedCount}</p>
               </div>
-              <div className="rounded-full bg-blue-500/10 p-3">
-                <FileEdit className="h-6 w-6 text-blue-600" />
+              <div className="rounded-full bg-info/20 p-3 shadow-sm transition-transform duration-300 hover:scale-110">
+                <FileEdit className="h-6 w-6 text-info" />
               </div>
             </div>
           </Card>
-          <Card className="p-6">
+          <Card className="p-6 card-hover bg-gradient-to-br from-success/10 via-success/5 to-transparent border-success/20 fade-in stagger-item">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Processed</p>
-                <p className="text-3xl font-bold">{processedCount}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-2">Processed</p>
+                <p className="text-3xl font-bold text-success">{processedCount}</p>
               </div>
-              <div className="rounded-full bg-green-500/10 p-3">
-                <Download className="h-6 w-6 text-green-600" />
+              <div className="rounded-full bg-success/20 p-3 shadow-sm transition-transform duration-300 hover:scale-110">
+                <Download className="h-6 w-6 text-success" />
               </div>
             </div>
           </Card>
         </div>
 
         {/* Allocations Table */}
-        <Card className="p-6">
+        <Card className="p-6 fade-in">
           <h3 className="mb-4 text-lg font-semibold">Allocations</h3>
           <AllocationTable allocations={allocationsList} />
         </Card>

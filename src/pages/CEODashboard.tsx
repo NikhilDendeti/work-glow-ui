@@ -62,11 +62,17 @@ export default function CEODashboard({ month }: CEODashboardProps) {
 
   // Transform top pods for table
   const topTeams = data.top_pods?.map((pod) => ({
+    pod_id: pod.pod_id,
     department: pod.department_name || 'Unknown',
     pod: pod.pod_name,
     hours: pod.hours,
     percent: data.total_hours > 0 ? (pod.hours / data.total_hours) * 100 : 0,
   })) || [];
+
+  // Handle pod drill-down navigation
+  const handlePodDrill = (team: { pod_id: number; department: string; pod: string; hours: number; percent: number }) => {
+    navigate(`/pod/${team.pod_id}?month=${month}`);
+  };
 
   // Transform department_breakdown for chart
   // Use department_breakdown which includes product breakdown per department
@@ -95,13 +101,13 @@ export default function CEODashboard({ month }: CEODashboardProps) {
   }) || [];
 
   return (
-    <div className="container space-y-8 py-8">
+    <div className="container space-y-8 py-8 smooth-scroll">
       {/* Quick Actions */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 fade-in">
         <Button
           variant="outline"
           onClick={() => navigate('/admin/process-allocations')}
-          className="gap-2"
+          className="gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 hover:border-primary/30 text-primary font-medium"
         >
           <FileCheck className="h-4 w-4" />
           Process Allocations
@@ -109,7 +115,7 @@ export default function CEODashboard({ month }: CEODashboardProps) {
         <Button
           variant="outline"
           onClick={() => navigate('/admin/final-master-list')}
-          className="gap-2"
+          className="gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 hover:border-primary/30 text-primary font-medium"
         >
           <FileText className="h-4 w-4" />
           Final Master List
@@ -117,41 +123,48 @@ export default function CEODashboard({ month }: CEODashboardProps) {
       </div>
 
       {/* Overview Stats */}
-      <div>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold tracking-tight">Organization Overview</h2>
-          <p className="text-muted-foreground">Total contributions across all products</p>
+      <div className="fade-in">
+        <div className="mb-6 space-y-2">
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Organization Overview</h2>
+          <p className="text-muted-foreground text-lg">Total contributions across all products</p>
         </div>
 
-        <div className="mb-6 rounded-lg border bg-card p-6">
-          <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-bold">{data.total_hours.toLocaleString()}</span>
-            <span className="text-xl text-muted-foreground">total hours</span>
+        <Card className="mb-6 p-8 card-hover bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-primary/20">
+          <div className="flex items-baseline gap-3">
+            <span className="text-6xl font-bold bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent">{data.total_hours.toLocaleString()}</span>
+            <span className="text-xl text-muted-foreground font-medium">total hours</span>
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* Product Cards */}
       <div className="grid gap-6 md:grid-cols-3">
-        {productCards.map((product) => (
-          <ProductCard
-            key={product.product}
-            product={product.product}
-            hours={product.hours}
-            percent={product.percent}
-            onClick={() => console.log('Product clicked:', product.product)}
-          />
+        {productCards.map((product, index) => (
+          <div key={product.product} className="fade-in stagger-item" style={{ animationDelay: `${index * 0.1}s` }}>
+            <ProductCard
+              product={product.product}
+              hours={product.hours}
+              percent={product.percent}
+              onClick={() => console.log('Product clicked:', product.product)}
+            />
+          </div>
         ))}
       </div>
 
       {/* Charts & Tables */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {chartData.length > 0 && <ProductChart data={chartData} />}
+        {chartData.length > 0 && (
+          <div className="lg:col-span-1">
+            <ProductChart data={chartData} />
+          </div>
+        )}
         {topTeams.length > 0 && (
-          <TopTeamsTable
-            teams={topTeams}
-            onDrill={(team) => console.log('Drill into:', team)}
-          />
+          <div className="lg:col-span-1">
+            <TopTeamsTable
+              teams={topTeams}
+              onDrill={handlePodDrill}
+            />
+          </div>
         )}
       </div>
     </div>

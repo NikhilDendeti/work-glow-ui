@@ -48,25 +48,25 @@ export default function GenerateAllPodSheets() {
   console.log('GenerateAllPodSheets - isError:', generateMutation.isError);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background smooth-scroll">
       <Header currentMonth={month} onMonthChange={setMonth} currentRole="Admin" />
       <div className="container space-y-8 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Generate All Pod Sheets</h2>
-            <p className="text-muted-foreground">
+        <div className="flex items-center justify-between fade-in">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Generate All Pod Sheets</h2>
+            <p className="text-muted-foreground text-lg">
               Generate allocation sheets for all pods for the selected month
             </p>
           </div>
-          <Button variant="outline" onClick={() => navigate('/admin')}>
+          <Button variant="outline" onClick={() => navigate('/admin')} className="shadow-sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Dashboard
           </Button>
         </div>
 
         {/* Generate Form */}
-        <Card className="p-6">
+        <Card className="p-6 card-hover fade-in">
           <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="month">Month</Label>
@@ -113,7 +113,7 @@ export default function GenerateAllPodSheets() {
 
         {/* Success Results */}
         {!generateMutation.isPending && generateData && generateData.success && generateData.data && (
-          <Card className="p-6">
+          <Card className="p-6 card-hover bg-gradient-to-br from-success/10 via-success/5 to-transparent border-success/20 fade-in">
             <div className="space-y-6">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-green-600" />
