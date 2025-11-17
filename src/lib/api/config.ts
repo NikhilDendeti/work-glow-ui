@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://0.0.0.0:8001/api';
+export const API_BASE_URL = 'https://orgcontributionbackend-production.up.railway.app/api';
 
 export const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access_token',
